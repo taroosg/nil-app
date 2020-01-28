@@ -27,10 +27,7 @@ const App = () => {
 
   const handleText = e => {
     const newText = e.target.value;
-    if (getLen <= 280) {
-
-    }
-    setText(newText);
+    setText(newText.substring(0, 140));
   }
 
   const getLen = str => {
@@ -50,7 +47,8 @@ const App = () => {
   };
 
   const tweetText = tweetText => {
-    const url = 'http://localhost:8000/api/v1/request';
+    // const url = 'http://localhost:8000/api/v1/request';
+    const url = 'https://git-grass-grower.lolipop.io/api/v1/request';
     const requestData = {
       tweet: tweetText,
       uid: user.uid,
