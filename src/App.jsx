@@ -27,8 +27,27 @@ const App = () => {
 
   const handleText = e => {
     const newText = e.target.value;
+    if (getLen <= 280) {
+
+    }
     setText(newText);
   }
+
+  const getLen = str => {
+    var result = 0;
+    for (var i = 0; i < str.length; i++) {
+      var chr = str.charCodeAt(i);
+      if ((chr >= 0x00 && chr < 0x81) ||
+        (chr === 0xf8f0) ||
+        (chr >= 0xff61 && chr < 0xffa0) ||
+        (chr >= 0xf8f1 && chr < 0xf8f4)) {
+        result += 1;
+      } else {
+        result += 2;
+      }
+    }
+    return result;
+  };
 
   const tweetText = tweetText => {
     const url = 'http://localhost:8000/api/v1/request';
@@ -44,6 +63,7 @@ const App = () => {
       })
       .catch(error => {
         console.log(error);
+        alert('Fatal Error.')
       })
       .then(() => {
       });
@@ -53,7 +73,6 @@ const App = () => {
 
   return (
     <div>
-      Username: {user && user.uid}
       <h1>Git Grass Grower</h1>
       {!user ?
         (<SignInScreen />) :
