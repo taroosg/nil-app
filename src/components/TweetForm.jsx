@@ -4,6 +4,9 @@ import React from 'react';
 const TweetForm = props => {
   return (
     <div>
+      <div>
+        <button onClick={() => { props.signOut() }}>signOut</button>
+      </div>
       <textarea name="" id="text" cols="30" rows="10" onChange={e => props.handleText(e)}></textarea>
       <div>
         <button type="button" id="tweet" onClick={() => props.tweet(props.text)}>tweet</button>

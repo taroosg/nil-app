@@ -62,6 +62,7 @@ const App = () => {
             text={text}
             handleText={e => handleText(e)}
             tweet={() => tweetText(text)}
+            signOut={() => signOut()}
           />
         )
       }
