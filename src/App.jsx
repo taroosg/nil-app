@@ -76,7 +76,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Git Grass Grower</h1>
+      <h1>Now I learned</h1>
       {!user ?
         (<SignInScreen />) :
         (
