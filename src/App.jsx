@@ -48,12 +48,17 @@ const App = () => {
 
   const tweetText = tweetText => {
     // const url = 'http://localhost:8000/api/v1/request';
-    const url = 'https://git-grass-grower.lolipop.io/api/v1/request';
+    const url = 'https://now-i-learned.lolipop.io/api/v1/request';
     const requestData = {
       tweet: tweetText,
       uid: user.uid,
     }
-    axios.post(url, requestData, { crossdomain: true })
+
+    axios.post(url, requestData, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
+    })
       .then(response => {
         console.log(response);
         setText('');
