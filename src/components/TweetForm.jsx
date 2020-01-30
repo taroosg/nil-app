@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import Icon from '@material-ui/core/Icon';
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -69,7 +67,9 @@ const TweetForm = props => {
                   id="tweet"
                   variant='contained'
                   onClick={() => props.tweet(props.text)}
-                >tweet</Button>
+                >
+                  tweet
+                </Button>
               </Grid>
             </Grid>
           </Paper>

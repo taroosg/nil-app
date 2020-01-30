@@ -5,7 +5,6 @@ import axios from 'axios';
 import { ThemeProvider, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import orange from '@material-ui/core/colors/orange';
-import yellow from '@material-ui/core/colors/yellow';
 
 
 import 'typeface-noto-sans-full'
@@ -15,8 +14,11 @@ import ButtonAppBar from './components/ButtonAppBar';
 const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
-    primary: orange,
-    secondary: yellow,
+    primary: {
+      // main: '#A59ACA',
+      main: '#f39800',
+    },
+    secondary: orange,
   },
 });
 
