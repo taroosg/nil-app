@@ -64,6 +64,9 @@ const App = () => {
   };
 
   const tweetText = tweetText => {
+    if (tweetText === '') {
+      return false;
+    }
     // const url = 'http://localhost:8000/api/v1/request';
     const url = 'https://now-i-learned.lolipop.io/api/v1/request';
     const requestData = {
