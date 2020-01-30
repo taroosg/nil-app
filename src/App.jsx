@@ -2,12 +2,29 @@ import React, { useState, useEffect } from 'react';
 import firebase from './firebase';
 import SignInScreen from './components/SignInScreen';
 import axios from 'axios';
+import { ThemeProvider, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import orange from '@material-ui/core/colors/orange';
+import yellow from '@material-ui/core/colors/yellow';
+
+
+import 'typeface-noto-sans-full'
 import TweetForm from './components/TweetForm';
+import ButtonAppBar from './components/ButtonAppBar';
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: orange,
+    secondary: yellow,
+  },
+});
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [text, setText] = useState('');
+
 
   useEffect(() => {
     const unlisten = firebase.auth().onAuthStateChanged(user => {
@@ -72,23 +89,29 @@ const App = () => {
       });
   }
 
-  if (loading) return <div>loading</div>;
-
   return (
-    <div>
-      <h1>Now I learned</h1>
-      {!user ?
-        (<SignInScreen />) :
-        (
-          <TweetForm
+    <MuiThemeProvider
+      theme={darkTheme}
+    >
+      <CssBaseline />
+      <ButtonAppBar
+        title="NIL"
+        user={user}
+        signOut={() => signOut()}
+      />
+      {loading
+        ? <p>loading</p>
+        : !user
+          ? <SignInScreen />
+          : <TweetForm
+            height="800px"
             text={text}
             handleText={e => handleText(e)}
             tweet={() => tweetText(text)}
             signOut={() => signOut()}
           />
-        )
       }
-    </div>
+    </MuiThemeProvider>
   )
 }
 
