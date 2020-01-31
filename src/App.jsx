@@ -8,6 +8,8 @@ import orange from '@material-ui/core/colors/orange';
 import 'typeface-noto-sans-full'
 import TweetForm from './components/TweetForm';
 import ButtonAppBar from './components/ButtonAppBar';
+import GrassTable from './components/GrassTable';
+import SimpleModal from './components/SimpleModal';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -26,6 +28,16 @@ const App = () => {
   const [text, setText] = useState('');
   const [grass, setGrass] = useState('');
 
+  // modal管理
+  const [isModalOpen, setModalOpen] = useState(true);
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+
 
   useEffect(() => {
     const unlisten = firebase.auth().onAuthStateChanged(user => {
@@ -41,6 +53,7 @@ const App = () => {
 
   const signOut = () => {
     firebase.auth().signOut();
+    setModalOpen(false);
   }
 
   const handleText = e => {
@@ -75,6 +88,7 @@ const App = () => {
     if (user) {
       getGrass(`${grassUrl}?uid=${user.uid}`).then(result => {
         setGrass(result.data.reverse());
+        setModalOpen(false);
       })
     }
   }, [grassUrl, user]);
@@ -84,6 +98,7 @@ const App = () => {
     if (tweetText === '') {
       return false;
     }
+    setModalOpen(true);
     const url = process.env.REACT_APP_REQUEST_URL;
     // const url = 'https://now-i-learned.lolipop.io/api/v1/request';
     const requestData = {
@@ -102,11 +117,13 @@ const App = () => {
         document.getElementById('text').value = '';
         getGrass(`${grassUrl}?uid=${user.uid}`).then(result => {
           setGrass(result.data.reverse());
+          setModalOpen(false);
         })
       })
       .catch(error => {
         console.log(error);
         alert('Fatal Error.')
+        setModalOpen(false);
       })
       .then(() => {
       });
@@ -117,6 +134,11 @@ const App = () => {
       theme={darkTheme}
     >
       <CssBaseline />
+      <SimpleModal
+        isModalOpen={isModalOpen}
+        handleModalOpen={() => handleModalOpen()}
+        handleModalClose={() => handleModalClose()}
+      />
       <ButtonAppBar
         title="NIL"
         user={user}
@@ -138,15 +160,19 @@ const App = () => {
               {(grass === '')
                 ? ''
                 : (
-                  <table>
-                    <tbody>
-                      <tr>
-                        <th>date</th>
-                        <th>count</th>
-                      </tr>
-                      {grass.map((x, index) => <tr key={index}><td>{x.data_date}</td><td>{x.data_count}</td></tr>)}
-                    </tbody>
-                  </table>
+                  <GrassTable
+                    grassArray={grass}
+                  />
+
+                  // <table>
+                  //   <tbody>
+                  //     <tr>
+                  //       <th>date</th>
+                  //       <th>count</th>
+                  //     </tr>
+                  //     {grass.map((x, index) => <tr key={index}><td>{x.data_date}</td><td>{x.data_count}</td></tr>)}
+                  //   </tbody>
+                  // </table>
                 )
               }
             </div>

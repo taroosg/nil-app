@@ -22,60 +22,58 @@ const TweetForm = props => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Grid
-        container
-        // spacing={3}
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-      >
-        <Grid item xs={12}>
-          <Paper
-            className={classes.paper}
+    <Grid
+      container
+      // spacing={3}
+      direction="column"
+      justify="center"
+      alignItems="stretch"
+    >
+      <Grid item xs={12}>
+        <Paper
+          className={classes.paper}
+        >
+          <Grid
+            container
+            spacing={3}
+            direction="column"
+            justify="center"
+            alignItems="center"
           >
             <Grid
-              container
+              item
+              xs={12}
               spacing={3}
-              direction="column"
-              justify="center"
-              alignItems="center"
             >
-              <Grid
-                item
-                xs={12}
-                spacing={3}
-              >
-                <TextField
-                  required
-                  id="text"
-                  label="Tweet!"
-                  variant="outlined"
-                  multiline={true}
-                  rows={10}
-                  onChange={e => props.handleText(e)}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                spacing={3}
-              >
-                <Button
-                  color="primary"
-                  type="button"
-                  id="tweet"
-                  variant='contained'
-                  onClick={() => props.tweet(props.text)}
-                >
-                  tweet
-                </Button>
-              </Grid>
+              <TextField
+                required
+                id="text"
+                label="Tweet!"
+                variant="outlined"
+                multiline={true}
+                rows={10}
+                onChange={e => props.handleText(e)}
+              />
             </Grid>
-          </Paper>
-        </Grid>
+            <Grid
+              item
+              xs={12}
+              spacing={3}
+            >
+              <Button
+                color="primary"
+                type="button"
+                id="tweet"
+                variant='contained'
+                onClick={() => props.tweet(props.text)}
+              >
+                tweet
+                </Button>
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
-    </div>
+    </Grid>
   )
 }
 export default TweetForm;
