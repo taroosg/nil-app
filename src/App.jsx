@@ -5,8 +5,6 @@ import axios from 'axios';
 import { ThemeProvider, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import orange from '@material-ui/core/colors/orange';
-
-
 import 'typeface-noto-sans-full'
 import TweetForm from './components/TweetForm';
 import ButtonAppBar from './components/ButtonAppBar';
@@ -26,6 +24,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [text, setText] = useState('');
+  const [grass, setGrass] = useState('');
 
 
   useEffect(() => {
@@ -65,12 +64,28 @@ const App = () => {
     return result;
   };
 
+  const grassUrl = process.env.REACT_APP_GRASS_URL;
+
+  const getGrass = async url => {
+    const data = await axios.get(url)
+    return data;
+  }
+
+  useEffect(() => {
+    if (user) {
+      getGrass(`${grassUrl}?uid=${user.uid}`).then(result => {
+        setGrass(result.data.reverse());
+      })
+    }
+  }, [grassUrl, user]);
+
+
   const tweetText = tweetText => {
     if (tweetText === '') {
       return false;
     }
-    // const url = 'http://localhost:8000/api/v1/request';
-    const url = 'https://now-i-learned.lolipop.io/api/v1/request';
+    const url = process.env.REACT_APP_REQUEST_URL;
+    // const url = 'https://now-i-learned.lolipop.io/api/v1/request';
     const requestData = {
       tweet: tweetText,
       uid: user.uid,
@@ -85,6 +100,9 @@ const App = () => {
         console.log(response);
         setText('');
         document.getElementById('text').value = '';
+        getGrass(`${grassUrl}?uid=${user.uid}`).then(result => {
+          setGrass(result.data.reverse());
+        })
       })
       .catch(error => {
         console.log(error);
@@ -108,13 +126,31 @@ const App = () => {
         ? <p>loading</p>
         : !user
           ? <SignInScreen />
-          : <TweetForm
-            height="800px"
-            text={text}
-            handleText={e => handleText(e)}
-            tweet={() => tweetText(text)}
-            signOut={() => signOut()}
-          />
+          : (
+            <div>
+              <TweetForm
+                height="800px"
+                text={text}
+                handleText={e => handleText(e)}
+                tweet={() => tweetText(text)}
+                signOut={() => signOut()}
+              />
+              {(grass === '')
+                ? ''
+                : (
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>date</th>
+                        <th>count</th>
+                      </tr>
+                      {grass.map((x, index) => <tr key={index}><td>{x.data_date}</td><td>{x.data_count}</td></tr>)}
+                    </tbody>
+                  </table>
+                )
+              }
+            </div>
+          )
       }
     </MuiThemeProvider>
   )
