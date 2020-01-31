@@ -25,7 +25,7 @@ const TweetForm = props => {
     <div>
       <Grid
         container
-        spacing={3}
+        // spacing={3}
         direction="column"
         justify="center"
         alignItems="stretch"
