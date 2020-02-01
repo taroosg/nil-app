@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import firebase from './firebase';
 import SignInScreen from './components/SignInScreen';
 import axios from 'axios';
-import { ThemeProvider, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import orange from '@material-ui/core/colors/orange';
 import 'typeface-noto-sans-full'
@@ -29,15 +29,13 @@ const App = () => {
   const [grass, setGrass] = useState('');
 
   // modal管理
-  const [isModalOpen, setModalOpen] = useState(true);
+  const [isModalOpen, setModalOpen] = useState(false);
   const handleModalOpen = () => {
     setModalOpen(true);
   };
   const handleModalClose = () => {
     setModalOpen(false);
   };
-
-
 
   useEffect(() => {
     const unlisten = firebase.auth().onAuthStateChanged(user => {
@@ -61,22 +59,6 @@ const App = () => {
     setText(newText.substring(0, 140));
   }
 
-  const getLen = str => {
-    var result = 0;
-    for (var i = 0; i < str.length; i++) {
-      var chr = str.charCodeAt(i);
-      if ((chr >= 0x00 && chr < 0x81) ||
-        (chr === 0xf8f0) ||
-        (chr >= 0xff61 && chr < 0xffa0) ||
-        (chr >= 0xf8f1 && chr < 0xf8f4)) {
-        result += 1;
-      } else {
-        result += 2;
-      }
-    }
-    return result;
-  };
-
   const grassUrl = process.env.REACT_APP_GRASS_URL;
 
   const getGrass = async url => {
@@ -92,7 +74,6 @@ const App = () => {
       })
     }
   }, [grassUrl, user]);
-
 
   const tweetText = tweetText => {
     if (tweetText === '') {
@@ -163,16 +144,6 @@ const App = () => {
                   <GrassTable
                     grassArray={grass}
                   />
-
-                  // <table>
-                  //   <tbody>
-                  //     <tr>
-                  //       <th>date</th>
-                  //       <th>count</th>
-                  //     </tr>
-                  //     {grass.map((x, index) => <tr key={index}><td>{x.data_date}</td><td>{x.data_count}</td></tr>)}
-                  //   </tbody>
-                  // </table>
                 )
               }
             </div>
