@@ -81,7 +81,6 @@ const App = () => {
     }
     setModalOpen(true);
     const url = process.env.REACT_APP_REQUEST_URL;
-    // const url = 'https://now-i-learned.lolipop.io/api/v1/request';
     const requestData = {
       tweet: tweetText,
       uid: user.uid,

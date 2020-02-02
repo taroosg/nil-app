@@ -7,19 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-// });
-
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-
 const GrassTable = props => {
-  // const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
