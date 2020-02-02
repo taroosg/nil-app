@@ -96,7 +96,7 @@ const App = () => {
         setText('');
         document.getElementById('text').value = '';
         getGrass(`${grassUrl}?uid=${user.uid}`).then(result => {
-          setGrass(result.data.reverse());
+          setGrass(result.data);
           setModalOpen(false);
         })
       })
